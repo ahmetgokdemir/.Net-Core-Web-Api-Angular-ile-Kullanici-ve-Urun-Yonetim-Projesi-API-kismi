@@ -29,6 +29,7 @@ namespace ServerApp.Models
         public string Introduction { get; set; } 
 
         public string Hobbies { get; set; }   
+        public List<Image> Images  { get; set; }
 
 
 

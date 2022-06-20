@@ -20,6 +20,7 @@ using System.Text; // ** Encoding kulanabilmek için tanımlandı..
 using System.Net; // ** HttpStatusCode
 using Microsoft.AspNetCore.Diagnostics; // ** IExceptionHandlerFeature
 using Microsoft.AspNetCore.Http; // ** WriteAsync
+using AutoMapper;
 
 namespace ServerApp
 {
@@ -41,6 +42,8 @@ namespace ServerApp
 
             services.AddIdentity<User,Role>().AddEntityFrameworkStores<SocialContext>();
             
+            services.AddScoped<ISocialRepository,SocialRepository>();
+
             services.Configure<IdentityOptions>(options=> {
 
                 options.Password.RequireDigit = true;
@@ -59,7 +62,11 @@ namespace ServerApp
 
             });
 
-            services.AddControllers().AddNewtonsoftJson(); //** AddNewtonsoftJson eklendi..
+            services.AddAutoMapper(typeof(Startup)); // ** StartUp.cs'de automapper'ı uygulamaya tanıtmak..
+
+            services.AddControllers().AddNewtonsoftJson(options => {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            }); //** AddNewtonsoftJson eklendi..
 
             // services-add-cor.. diyip enter'a bas ..
             /*
@@ -113,11 +120,12 @@ namespace ServerApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,UserManager<User> userManager)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                SeedDatabase.Seed(userManager).Wait();
             }
             else{
                 app.UseExceptionHandler(appError => {

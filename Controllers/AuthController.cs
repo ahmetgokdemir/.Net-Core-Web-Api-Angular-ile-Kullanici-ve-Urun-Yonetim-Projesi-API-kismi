@@ -18,7 +18,7 @@ namespace ServerApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]    // => localhost:5000/api/User  
-    public class UserController: ControllerBase
+    public class AuthController: ControllerBase
     {
         private readonly UserManager<User> _userManager; // bu field
         private readonly SignInManager<User> _signInManager;
@@ -27,7 +27,7 @@ namespace ServerApp.Controllers
         //public IConfiguration _configurations {get; set;} // bu property
 
         // constructor (ctor)
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
+        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;

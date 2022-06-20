@@ -16,5 +16,6 @@ namespace ServerApp.Data
         }
 
         public DbSet<Product> Products { get; set; } // veritabanında tablo olacak..
+        public DbSet<Image> Images { get; set; }     
     }
 }
