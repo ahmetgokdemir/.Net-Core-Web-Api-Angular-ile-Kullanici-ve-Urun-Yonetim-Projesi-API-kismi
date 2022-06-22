@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\ahmet.gokdemir\\Desktop\\SocialApp\\ServerApp\\ServerApp.csproj": {}
+    "C:\\Users\\ahmet.gokdemir\\Desktop\\SocialApp\\ServerApp\\ServerApp.csproj": {}
   },
   "projects": {
-    "c:\\Users\\ahmet.gokdemir\\Desktop\\SocialApp\\ServerApp\\ServerApp.csproj": {
+    "C:\\Users\\ahmet.gokdemir\\Desktop\\SocialApp\\ServerApp\\ServerApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\ahmet.gokdemir\\Desktop\\SocialApp\\ServerApp\\ServerApp.csproj",
+        "projectUniqueName": "C:\\Users\\ahmet.gokdemir\\Desktop\\SocialApp\\ServerApp\\ServerApp.csproj",
         "projectName": "ServerApp",
-        "projectPath": "c:\\Users\\ahmet.gokdemir\\Desktop\\SocialApp\\ServerApp\\ServerApp.csproj",
+        "projectPath": "C:\\Users\\ahmet.gokdemir\\Desktop\\SocialApp\\ServerApp\\ServerApp.csproj",
         "packagesPath": "C:\\Users\\ahmet.gokdemir\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\ahmet.gokdemir\\Desktop\\SocialApp\\ServerApp\\obj\\",
+        "outputPath": "C:\\Users\\ahmet.gokdemir\\Desktop\\SocialApp\\ServerApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ahmet.gokdemir\\AppData\\Roaming\\NuGet\\NuGet.Config",

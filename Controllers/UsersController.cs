@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ServerApp.Data;
 using ServerApp.DTO;
 using AutoMapper; // ** 
+using System.Security.Claims;
 
 namespace ServerApp.Controllers
 {
@@ -72,6 +73,31 @@ namespace ServerApp.Controllers
             return Ok(result);
             
             // return Ok(user);
+        }
+
+        // api/user/id
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UserForUpdateDTO model)
+        {   
+            // token içerisindeki id ile (ClaimTypes.NameIdentifier).Value) güncelllenmek istenen kişinin id'si (int id) kontrol edilmeli ki user başka user'ınkine müdahale edemesin
+            // Authcontroller.cs de new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), set edilmişti..
+            // ClaimTypes.NameIdentifier).Value => user'ın id bilgisini tutar.. 
+
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return BadRequest("not valid request");
+
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await _repository.GetUser(id); // güncellenecek kullanıcı çekilir..
+
+            _mapper.Map(model,user); // güncelleme işlemi
+
+            if (await _repository.SaveChanges())
+                return Ok();
+
+            throw new System.Exception("güncelleme sırasında hata oluştu");
+
         }
     }
 }
