@@ -51,6 +51,9 @@ namespace ServerApp.Controllers
                 Email = model.Email,
                 Name = model.Name,
                 Gender = model.Gender,
+                DateOfBirth = model.DateOfBirth,
+                Country = model.Country,
+                City = model.City,
                 Created = DateTime.Now,
                 LastActive = DateTime.Now
             };

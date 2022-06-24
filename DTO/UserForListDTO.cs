@@ -20,6 +20,9 @@ namespace ServerApp.DTO
       public DateTime LastActive { get; set; }
       public string City { get; set; }
       public string Country { get; set; }
-      public ImagesForDetails Image { get; set; } // getUsers()'da image:null gelmesinin sebebi... kaynakta (User.cs) image list tipinde ama UserDTO ise Image tipinde dolayısıyla map edemez.. sonra da User bilgisini almamak için Image yerine DTO olan ImagesForDetails kullanılnır..
+      
+      // public ImagesForDetails Image { get; set; } // getUsers()'da image:null gelmesinin sebebi... kaynakta (User.cs) image list tipinde ama UserDTO ise Image tipinde dolayısıyla map edemez.. sonra da User bilgisini almamak için Image yerine DTO olan ImagesForDetails kullanılnır..
+
+      public string ImageUrl { get; set; }
     }
 }
