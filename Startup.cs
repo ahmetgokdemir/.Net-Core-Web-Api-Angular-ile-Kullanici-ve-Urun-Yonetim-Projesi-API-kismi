@@ -21,6 +21,7 @@ using System.Net; // ** HttpStatusCode
 using Microsoft.AspNetCore.Diagnostics; // ** IExceptionHandlerFeature
 using Microsoft.AspNetCore.Http; // ** WriteAsync
 using AutoMapper;
+using ServerApp.Helpers;
 
 namespace ServerApp
 {
@@ -116,6 +117,9 @@ namespace ServerApp
                 };
 
                 });
+
+
+                  services.AddScoped<LastActiveActionFilter>();
 
         }
 

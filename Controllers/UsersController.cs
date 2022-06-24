@@ -6,9 +6,11 @@ using ServerApp.Data;
 using ServerApp.DTO;
 using AutoMapper; // ** 
 using System.Security.Claims;
+using ServerApp.Helpers;
 
 namespace ServerApp.Controllers
 {
+    [ServiceFilter(typeof(LastActiveActionFilter))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
