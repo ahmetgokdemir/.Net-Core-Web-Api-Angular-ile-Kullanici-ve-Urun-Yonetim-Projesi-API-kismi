@@ -29,7 +29,11 @@ namespace ServerApp.Models
         public string Introduction { get; set; } 
 
         public string Hobbies { get; set; }   
-        public List<Image> Images  { get; set; }
+        public ICollection<Image> Images { get; set; }
+
+
+        public ICollection<UserToUser> Followings { get; set; } //  takip ettiği kişiler 
+        public ICollection<UserToUser> Followers { get; set; } // takip eden kişiler
 
 
 
