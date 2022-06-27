@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ServerApp.Models;
@@ -37,10 +38,66 @@ namespace ServerApp.Data
             // Include(i=>i.Images) ile user bilgilerinin karşılık geldiği image bilgileri image tablosundan alınır.. Join işlemi sanırım..
         }
 
-        public async Task<IEnumerable<User>> GetUsers()
+         // api/users?followers=true&gender=male     --> followers=true&gender=male : userParams oluyor
+         // parametreleri tek tek göndermek yerine bu parametreleri bir class içerisine almak doğru olur.. UserQueryParams.cs
+        public async Task<IEnumerable<User>> GetUsers(UserQueryParams userParams)
         {
+            /*
             var users = await _context.Users.Include(i=>i.Images).ToListAsync();
-            return users;
+            */
+            
+            var users = _context.Users
+                        .Where(i=>i.Id != userParams.UserId) // login olan kişi, members list'de gözükmeyecek!!
+                        .Include(i=>i.Images)
+                        .AsQueryable(); // tüm kullanıcıları aldıktan sonra filtrelemek doğru değil.. ToListAsync yerine AsQueryable
+            
+            if(userParams.Followers)
+            {
+                // takip edenler
+                var result = await GetFollows(userParams.UserId, false);
+                users = users.Where(u=>result.Contains(u.Id));
+            }
+
+            if(userParams.Followings)
+            {
+                // takip edilenler
+                 var result = await GetFollows(userParams.UserId, true);
+                users = users.Where(u=>result.Contains(u.Id));
+            }
+
+            return await users.ToListAsync(); // bu sorguyu filtrelemeler bittikten sonra en sonunda çalıştırdık..
+
         }
+        
+        public async Task<bool> IsAlreadyFollowed(int followerUserId, int userId)
+        {
+            // UserToUser, SocialContext.cs'de tanımlandı..
+            return await _context.UserToUser
+                .AnyAsync(i=>i.FollowerId == followerUserId && i.UserId == userId);
+        }
+
+        private async Task<IEnumerable<int>> GetFollows(int userId, bool IsFollowings)
+        {
+            // <int> --> .Select(i=>i.UserId); || .Select(i=>i.FollowerId); kullanıcıların id'lerini geriye döndüreceğiz o yüzden int
+            var user = await _context.Users
+                                .Include(i=>i.Followers)
+                                .Include(i=>i.Followings)
+                                .FirstOrDefaultAsync(i=>i.Id==userId);
+
+            if (IsFollowings)
+            {
+                return user.Followers
+                            .Where(i=>i.FollowerId==userId)
+                            .Select(i=>i.UserId);
+            }
+            else
+            {
+                return user.Followings
+                            .Where(i=>i.UserId==userId)
+                            .Select(i=>i.FollowerId);
+            }
+        }
+
+
     }
 }
