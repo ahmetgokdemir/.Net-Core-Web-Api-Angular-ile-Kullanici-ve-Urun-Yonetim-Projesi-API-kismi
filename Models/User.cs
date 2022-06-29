@@ -32,8 +32,8 @@ namespace ServerApp.Models
         public ICollection<Image> Images { get; set; }
 
 
-        public ICollection<UserToUser> Followings { get; set; } //  takip ettiği kişiler 
-        public ICollection<UserToUser> Followers { get; set; } // takip eden kişiler
+        public ICollection<UserToUser> Followings { get; set; } // login olanın takip edilen olduğu liste (takip edilen)
+        public ICollection<UserToUser> Followers { get; set; } // login olanın takipçi olduğu liste (takip eden)
 
 
 

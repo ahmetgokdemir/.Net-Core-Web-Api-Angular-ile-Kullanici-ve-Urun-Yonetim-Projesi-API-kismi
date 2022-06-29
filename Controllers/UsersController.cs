@@ -28,9 +28,11 @@ namespace ServerApp.Controllers
 
         }
 
-         // api/users ==> url yazılınca bu fonksiyon çalışacak
+         // api/users ==> url yazılınca bu fonksiyon çalışacak.. artık api/users?followers=true&gender=male bu formatta..
         public async Task<IActionResult> GetUsers([FromQuery]UserQueryParams userParams)
         {
+            await Task.Delay(250); // veri hemen çekilmesin ve loading iconu ekranda bir süre görünsün diye
+
             /*var users = await _repository.GetUsers();
             return Ok(users);
             */

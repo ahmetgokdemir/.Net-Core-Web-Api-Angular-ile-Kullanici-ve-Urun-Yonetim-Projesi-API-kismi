@@ -30,14 +30,14 @@ namespace ServerApp.Data
 
             // ilişki kurulması
             builder.Entity<UserToUser>()
-                .HasOne(l=> l.User) // bir user,takip edilen
-                .WithMany(a=>a.Followers) // birden fazla takipçileri
-                .HasForeignKey(l=>l.UserId);
+                .HasOne(l=> l.User) // bir user,takip edilen l.UserId
+                .WithMany(a=>a.Followers) // Followers: login olanın takipçi olduğu liste (takip eden), a.Id is a PrimaryKey
+                .HasForeignKey(l=>l.FollowerId); // a.Id == l.FollowerId
 
             builder.Entity<UserToUser>()
-                .HasOne(l=> l.Follower) // bir user,takipçi
-                .WithMany(a=>a.Followings) // birden fazla takip edilen , takipçi takip ettiği kişiler 
-                .HasForeignKey(l=>l.FollowerId);
+                .HasOne(l=> l.Follower) // bir user,takipçi l.followerId
+                .WithMany(a=>a.Followings)   // Followings: login olanın takip edilen olduğu liste (takip edilen), a.Id is a PrimaryKey
+                .HasForeignKey(l=>l.UserId); // a.Id == l.UserId
         }
 
 
