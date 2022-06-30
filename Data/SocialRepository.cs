@@ -61,6 +61,7 @@ namespace ServerApp.Data
                 users = users.Where(u=>result.Contains(u.Id)); // user listesi içerisinden takipçi id'lerine göre filteleme ..
             }
 
+
             // api/users?followings=true
             if(userParams.Followings) // kullanıcının takip ettiği kişiler
             {
