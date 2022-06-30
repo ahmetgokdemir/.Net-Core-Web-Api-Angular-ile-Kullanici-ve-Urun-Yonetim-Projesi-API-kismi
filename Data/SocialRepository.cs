@@ -50,6 +50,7 @@ namespace ServerApp.Data
             var users = _context.Users
                         .Where(i=>i.Id != userParams.UserId) // login olan kişi, members list'de gözükmeyecek!!
                         .Include(i=>i.Images)
+                        .OrderByDescending(i=>i.LastActive) //
                         .AsQueryable(); // tüm kullanıcıları aldıktan sonra filtrelemek doğru değil.. ToListAsync yerine AsQueryable
             
             // api/users?followers=true
@@ -93,6 +94,18 @@ namespace ServerApp.Data
             if(!string.IsNullOrEmpty(userParams.Country)) 
             {
                 users = users.Where(i=>i.Country.ToLower()==userParams.Country.ToLower());
+            }
+
+            if(!string.IsNullOrEmpty(userParams.OrderBy))
+            {
+                if(userParams.OrderBy == "age")
+                {
+                    users = users.OrderBy(i=>i.DateOfBirth);
+                }
+                else if (userParams.OrderBy == "created")
+                {
+                    users = users.OrderByDescending(i=>i.Created); // hesabı en son oluşturan(büyük tarih) en başta gelecek..
+                }
             }
 
             return await users.ToListAsync(); // bu sorguyu filtrelemeler bittikten sonra en sonunda çalıştırdık..
